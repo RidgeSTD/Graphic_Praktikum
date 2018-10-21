@@ -2,6 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QtWidgets>
+#include <QMenuBar>
+#include <QAction>
+#include <QMenu>
 
 class MainWindow : public QMainWindow
 {
