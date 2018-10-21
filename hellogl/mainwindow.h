@@ -14,6 +14,9 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+public slots:
+    void showAboutBox();
 };
 
 #endif // MAINWINDOW_H
