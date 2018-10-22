@@ -6,17 +6,21 @@
 #include <QMenuBar>
 #include <QAction>
 #include <QMenu>
+#include "gl_widget.h"
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-public:
+  public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-public slots:
+  public slots:
     void showAboutBox();
+
+  private:
+    GLWidget *glWidget;
 };
 
 #endif // MAINWINDOW_H
