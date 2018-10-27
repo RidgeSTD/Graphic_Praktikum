@@ -29,6 +29,10 @@ private:
   int yRot;
   int zRot;
   QOpenGLShaderProgram *program;
+
+  QMatrix4x4 projectionM;
+  QMatrix4x4 viewM;
+  QMatrix4x4 modelM;
 };
 
 #endif

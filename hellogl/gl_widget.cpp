@@ -1,5 +1,4 @@
 #include "gl_widget.h"
-#include <QCoreApplication>
 
 GLWidget::GLWidget(QWidget *parent)
     : QOpenGLWidget(parent),
@@ -43,6 +42,9 @@ void GLWidget::initializeGL()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, 3 * num_tris * sizeof(GLuint), vertex_index, GL_STATIC_DRAW);
 
     initShaders();
+
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
 }
 
 void GLWidget::initShaders()
@@ -85,12 +87,20 @@ void GLWidget::paintGL()
 {
     glClearColor(0, 0, 0, 1);
 
-//    glDrawElements()
+    QMatrix4x4 view;
+    view.lookAt(QVector3D(2, 3, 3), QVector3D(0, 0, 0), QVector3D(0, 1, 0));
+
+    // no need to use model matrix for it's identical
+    program->setUniformValue("mvp_matrix", projectionM * view);
 }
 
 void GLWidget::resizeGL(int width, int height)
 {
     glViewport(0, 0, width, height);
+
+    qreal aspect = (qreal)width / ((qreal)height ? height : 1);
+    projectionM.setToIdentity();
+    projectionM.perspective(45.0f, aspect, 0.1f, 10.0f);
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event)
