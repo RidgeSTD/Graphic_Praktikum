@@ -22,13 +22,26 @@ protected:
   void wheelEvent(QWheelEvent *event);
 
 private:
-  GLuint *vao;
-  GLuint *vbo;
-  GLuint *ibo;
+  const static unsigned int NUM_VERTS = 4;
+  const static unsigned int NUM_TRIS = 2;
+  GLuint vao;
+  GLuint vbo;
+  GLuint ibo;
   int xRot;
   int yRot;
   int zRot;
   QOpenGLShaderProgram *program;
+  const GLfloat vertex_position[3 * NUM_VERTS] =
+      {
+          1.0, 1.0, 0.0,
+          -1.0, 1.0, 0.0,
+          -1.0, -1.0, 0.0,
+          1.0, -1.0, 0.0};
+
+  const GLuint vertex_index[3 * NUM_TRIS] =
+      {
+          0, 1, 2,
+          0, 2, 3};
 };
 
 #endif
