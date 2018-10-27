@@ -33,6 +33,13 @@ HEADERS += \
         mainwindow.h\
         gl_widget.h
 
+RESOURCES += \
+        shaders.qrc
+
+OTHER_FILES += \
+        shader.vert \
+        shader.frag
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin

@@ -1,5 +1,8 @@
+#ifndef GLWIDGET_H
+#define GLWIDGET_H
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions_4_0_Core>
+#include <QOpenGLShaderProgram>
 
 class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_0_Core
 {
@@ -11,6 +14,7 @@ public:
 
 protected:
   void initializeGL();
+  void initShaders();
   void paintGL();
   void resizeGL(int width, int height);
   void mousePressEvent(QMouseEvent *event);
@@ -24,5 +28,7 @@ private:
   int xRot;
   int yRot;
   int zRot;
-//  VertexArrayObject vao;
+  QOpenGLShaderProgram *program;
 };
+
+#endif
