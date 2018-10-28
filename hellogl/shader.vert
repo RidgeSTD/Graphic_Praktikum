@@ -1,7 +1,7 @@
 #version 400
 
 in vec3 pos;
-in mat4 mvp_matrix;
+uniform mat4 mvp_matrix;
 
 void main(void)
 {
