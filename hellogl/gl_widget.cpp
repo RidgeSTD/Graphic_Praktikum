@@ -1,93 +1,49 @@
 #include "gl_widget.h"
-#include <QCoreApplication>
+#include "glu.h"
 
-GLWidget::GLWidget(QWidget *parent)
-    : QOpenGLWidget(parent),
-      program(new QOpenGLShaderProgram)
+MyGLWidget::MyGLWidget(QWidget *parent) :
+    QGLWidget(parent)
 {
+    fullscreen = false;
 }
 
-GLWidget::~GLWidget()
+MyGLWidget::~MyGLWidget()
 {
+
 }
 
-void GLWidget::initializeGL()
+
+void MyGLWidget::initializeGL()                         //此处开始对OpenGL进行所以设置
 {
-    initializeOpenGLFunctions();
+    glClearColor(0.0, 0.0, 0.0, 0.0);                   //黑色背景
+    glShadeModel(GL_SMOOTH);                            //启用阴影平滑
 
-    glClearColor(0, 200, 0, 1);
-
-    //    glGenVertexArrays(1, &vao);
-    //    glBindVertexArray(vao);
-
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_position), vertex_position, GL_STATIC_DRAW);
-
-    //    glGenBuffers(1, &ibo);
-    //    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-    //    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(vertex_index), vertex_index, GL_STATIC_DRAW);
-
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
-    // initShaders();
-
-    glEnable(GL_CULL_FACE);
+    glClearDepth(1.0);                                  //设置深度缓存
+    glEnable(GL_DEPTH_TEST);                            //启用深度测试
+    glDepthFunc(GL_LEQUAL);                             //所作深度测试的类型
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  //告诉系统对透视进行修正
 }
 
-void GLWidget::initShaders()
+void MyGLWidget::resizeGL(int w, int h)                 //重置OpenGL窗口的大小
 {
-    if (!program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/shader.vert"))
-    {
-        close();
-    }
-    if (!program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shader.frag"))
-    {
-        close();
-    }
-
-    if (!program->link())
-    {
-        close();
-    }
-
-    int l_attr = program->attributeLocation("pos");
-    if (l_attr >= 0)
-    {
-        program->setAttributeBuffer(l_attr, GL_FLOAT, 0, 3, 0);
-    }
-
-    program->setUniformValue("color", 0.0, 200.0, 0.0);
-    program->enableAttributeArray(0);
-
-    if (!program->bind())
-    {
-        close();
-    }
+    glViewport(0, 0, (GLint)w, (GLint)h);               //重置当前的视口
+    glMatrixMode(GL_PROJECTION);                        //选择投影矩阵
+    glLoadIdentity();                                   //重置投影矩阵
+    //设置视口的大小
+    gluPerspective(45.0, (GLfloat)w/(GLfloat)h, 0.1, 100.0);
+    glMatrixMode(GL_MODELVIEW);                         //选择模型观察矩阵
+    glLoadIdentity();                                   //重置模型观察矩阵
 }
 
-void GLWidget::paintGL()
+void MyGLWidget::paintGL()                              //从这里开始进行所以的绘制
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    //    glDrawElements(GL_TRIANGLES, 3 * NUM_TRIS, GL_UNSIGNED_INT, 0);
-    glDrawArrays(GL_TRIANGLES, 0, 9);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //清除屏幕和深度缓存
+    glLoadIdentity();                                   //重置当前的模型观察矩阵
 }
 
-void GLWidget::resizeGL(int width, int height)
+void MyGLWidget::keyPressEvent(QKeyEvent *event)
 {
-    glViewport(0, 0, width, height);
+
 }
 
-void GLWidget::mousePressEvent(QMouseEvent *event)
-{
-}
 
-void GLWidget::mouseMoveEvent(QMouseEvent *event)
-{
-}
-
-void GLWidget::wheelEvent(QWheelEvent *event)
-{
-}

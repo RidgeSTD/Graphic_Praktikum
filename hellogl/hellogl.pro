@@ -26,11 +26,11 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp \
+#        mainwindow.cpp \
         gl_widget.cpp
 
 HEADERS += \
-        mainwindow.h\
+#        mainwindow.h\
         gl_widget.h
 
 RESOURCES += \

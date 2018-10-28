@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "gl_widget.h"
 #include <QApplication>
 #include <QSurfaceFormat>
 
@@ -12,7 +12,8 @@ int main(int argc, char *argv[])
     format.setProfile(QSurfaceFormat::CoreProfile);
     QSurfaceFormat::setDefaultFormat(format);
 
-    MainWindow w;
+    MyGLWidget w;
+    w.resize(400, 300);
     w.show();
 
     return a.exec();
