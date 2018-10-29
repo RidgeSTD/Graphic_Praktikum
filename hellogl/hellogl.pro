@@ -27,11 +27,13 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-        gl_widget.cpp
+        gl_widget.cpp \
+    cube.cpp
 
 HEADERS += \
         mainwindow.h\
-        gl_widget.h
+        gl_widget.h \
+    cube.h
 
 RESOURCES += \
         shaders.qrc
