@@ -1,6 +1,7 @@
 #include "gl_widget.h"
 #include <QMouseEvent>
 #include <iostream>
+#include <GL/glu.h>
 
 GLWidget::GLWidget(QWidget *parent)
     : QGLWidget(parent)
@@ -14,36 +15,36 @@ GLWidget::~GLWidget()
 void GLWidget::initializeGL()
 {
     initializeOpenGLFunctions();
-    std::cout<<glGetString(GL_VERSION)<<std::endl;
-//    std::cout<<glGetString(GSLS)
+    std::cout<<"OpenGL Version: "<<glGetString(GL_VERSION)<<std::endl;
+    std::cout<<"OpenGL Version: "<<glGetString(GL_SHADING_LANGUAGE_VERSION)<<std::endl;
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     program = new QOpenGLShaderProgram(this);
 
-    initShaders();
+//    initShaders();
 
 //    on mac it's opengl 2.1, it's not a must to use vao, and it's also not
 //    supported. Here is just in case
-    vao.create();
-    QOpenGLVertexArrayObject::Binder vaoBinder(&vao);
+//    vao.create();
+//    QOpenGLVertexArrayObject::Binder vaoBinder(&vao);
 
-    vbo.create();
-    vbo.bind();
-    vbo.allocate(vertex_position, 3 * num_verts * sizeof(GLfloat));
-    vbo.bind();
+//    vbo.create();
+//    vbo.bind();
+//    vbo.allocate(vertex_position, 3 * num_verts * sizeof(GLfloat));
+//    vbo.bind();
 
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
-    vbo.release();
+//    glEnableVertexAttribArray(0);
+//    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), 0);
+//    vbo.release();
 
-    ibo.create();
-    ibo.bind();
-    ibo.allocate(vertex_index, 3 * num_tris * sizeof(GLuint));
+//    ibo.create();
+//    ibo.bind();
+//    ibo.allocate(vertex_index, 3 * num_tris * sizeof(GLuint));
 
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
-    program->release();
+//    program->release();
 }
 
 void GLWidget::initShaders()
@@ -80,7 +81,7 @@ void GLWidget::paintGL()
 //    // no need to use model matrix for it's identical
 //    program->setUniformValue(1, projectionM * view);
 
-////    glDrawElements(GL_TRIANGLES, 3 * num_tris, GL_UNSIGNED_INT, 0);
+//    glDrawElements(GL_TRIANGLES, 3 * num_tris, GL_UNSIGNED_INT, 0);
 //    glDrawArrays(GL_TRIANGLES, 0, 3 * num_verts);
 //    program->release();
 
@@ -108,10 +109,14 @@ void GLWidget::resizeGL(int width, int height)
 
     // reset projection matrix
     glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(45.0f, (GLfloat)width/(GLfloat)height, 0.1f, 100.0f);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
-    qreal aspect = (qreal)width / height;
-    projectionM.setToIdentity();
-    projectionM.perspective(45.0f, aspect, 0.1f, 10.0f);
+//    qreal aspect = (qreal)width / height;
+//    projectionM.setToIdentity();
+//    projectionM.perspective(45.0f, aspect, 0.1f, 10.0f);
 }
 
 //void GLWidget::mousePressEvent(QMouseEvent *event)

@@ -40,6 +40,8 @@ OTHER_FILES += \
         shader.vert \
         shader.frag
 
+LIBS += -lglu32 -lopengl32
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
