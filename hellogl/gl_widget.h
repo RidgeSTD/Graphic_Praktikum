@@ -8,13 +8,13 @@
 #include <QGLWidget>
 #include "cube.h"
 
-class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions
+class MyGLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
   Q_OBJECT
 
 public:
-  GLWidget(QWidget *parent = 0);
-  ~GLWidget();
+  MyGLWidget(QWidget *parent = 0);
+  ~MyGLWidget();
 
 public slots:
   void setXRotation(int angle);

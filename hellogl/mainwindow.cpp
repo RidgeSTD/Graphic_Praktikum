@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     //    a way to write with conveniece function, again, nothing showed because it's taken by OS X System
     menuBar->addMenu("&Help")->addAction("&About", this, SLOT(showAboutBox()), QKeySequence("Ctrl+a"));
 
-    glWidget = new GLWidget();
+    glWidget = new MyGLWidget();
 
     setCentralWidget(glWidget);
 }

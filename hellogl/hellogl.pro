@@ -28,11 +28,15 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
         gl_widget.cpp \
+        glwidget.cpp \
+        logo.cpp \
     cube.cpp
 
 HEADERS += \
         mainwindow.h\
         gl_widget.h \
+        glwidget.h\
+        logo.h \
     cube.h
 
 RESOURCES += \

@@ -7,6 +7,7 @@
 #include <QAction>
 #include <QMenu>
 #include "gl_widget.h"
+//#include "glwidget.h"
 
 class MainWindow : public QMainWindow
 {
@@ -20,7 +21,7 @@ class MainWindow : public QMainWindow
     void showAboutBox();
 
   private:
-    GLWidget *glWidget;
+    MyGLWidget *glWidget;
 };
 
 #endif // MAINWINDOW_H

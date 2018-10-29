@@ -3,19 +3,19 @@
 #include <iostream>
 #include <GL/glu.h>
 
-GLWidget::GLWidget(QWidget *parent)
+MyGLWidget::MyGLWidget(QWidget *parent)
     : QOpenGLWidget(parent)
 {
 }
 
-GLWidget::~GLWidget()
+MyGLWidget::~MyGLWidget()
 {
     cleanup();
 }
 
-void GLWidget::initializeGL()
+void MyGLWidget::initializeGL()
 {
-    connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &GLWidget::cleanup);
+    connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &MyGLWidget::cleanup);
 
     initializeOpenGLFunctions();
     std::cout<<"OpenGL Version: "<<glGetString(GL_VERSION)<<std::endl;
@@ -51,7 +51,7 @@ void GLWidget::initializeGL()
     program->release();
 }
 
-void GLWidget::setupVertexAttribs() {
+void MyGLWidget::setupVertexAttribs() {
     vbo.bind();
         QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
         f->glEnableVertexAttribArray(0);
@@ -61,7 +61,7 @@ void GLWidget::setupVertexAttribs() {
         vbo.release();
 }
 
-void GLWidget::initShaders()
+void MyGLWidget::initShaders()
 {
     program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/shader.vert");
     program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shader.frag");
@@ -78,7 +78,7 @@ void GLWidget::initShaders()
     colorUniformLoc = program->uniformLocation("color");
 }
 
-void GLWidget::paintGL()
+void MyGLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
@@ -101,7 +101,7 @@ void GLWidget::paintGL()
     program->release();
 }
 
-void GLWidget::resizeGL(int width, int height)
+void MyGLWidget::resizeGL(int width, int height)
 {
     if (height == 0)
     {
@@ -115,7 +115,7 @@ void GLWidget::resizeGL(int width, int height)
 }
 
 
-void GLWidget::cleanup()
+void MyGLWidget::cleanup()
 {
     if (program == nullptr)
         return;
@@ -134,12 +134,12 @@ static void qNormalizeAngle(int &angle)
 }
 
 
-void GLWidget::mousePressEvent(QMouseEvent *event)
+void MyGLWidget::mousePressEvent(QMouseEvent *event)
 {
     m_lastPos = event->pos();
 }
 
-void GLWidget::mouseMoveEvent(QMouseEvent *event)
+void MyGLWidget::mouseMoveEvent(QMouseEvent *event)
 {
     int dx = event->x() - m_lastPos.x();
     int dy = event->y() - m_lastPos.y();
@@ -154,12 +154,12 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
     m_lastPos = event->pos();
 }
 
-void GLWidget::wheelEvent(QWheelEvent *event)
+void MyGLWidget::wheelEvent(QWheelEvent *event)
 {
 }
 
 
-void GLWidget::setXRotation(int angle)
+void MyGLWidget::setXRotation(int angle)
 {
     qNormalizeAngle(angle);
     if (angle != xRot) {
@@ -169,7 +169,7 @@ void GLWidget::setXRotation(int angle)
     }
 }
 
-void GLWidget::setYRotation(int angle)
+void MyGLWidget::setYRotation(int angle)
 {
     qNormalizeAngle(angle);
     if (angle != yRot) {
@@ -179,7 +179,7 @@ void GLWidget::setYRotation(int angle)
     }
 }
 
-void GLWidget::setZRotation(int angle)
+void MyGLWidget::setZRotation(int angle)
 {
     qNormalizeAngle(angle);
     if (angle != zRot) {
