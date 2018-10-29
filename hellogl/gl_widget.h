@@ -14,19 +14,28 @@ class GLWidget : public QGLWidget, protected QOpenGLFunctions
 public:
   GLWidget(QWidget *parent = 0);
   ~GLWidget();
-  static const unsigned int num_verts = 4;
-  static const unsigned int num_tris = 2;
 
 protected:
   void initializeGL();
   void initShaders();
   void paintGL();
   void resizeGL(int width, int height);
-//  void mousePressEvent(QMouseEvent *event);
-//  void mouseMoveEvent(QMouseEvent *event);
-//  void wheelEvent(QWheelEvent *event);
+  //  void mousePressEvent(QMouseEvent *event);
+  //  void mouseMoveEvent(QMouseEvent *event);
+  //  void wheelEvent(QWheelEvent *event);
 
 private:
+  static const unsigned int num_verts = 4;
+  static const unsigned int num_tris = 2;
+  const GLfloat vertex_position[12] = {
+      1.0f, 1.0f, 0.0f,
+      -1.0f, 1.0f, 0.0f,
+      -1.0f, -1.0f, 0.0f,
+      1.0f, -1.0f, 0.0f};
+  GLuint vertex_index[6] =
+      {
+          0, 1, 2,
+          0, 2, 3};
   QOpenGLVertexArrayObject vao;
   QOpenGLBuffer vbo;
   QOpenGLBuffer ibo;

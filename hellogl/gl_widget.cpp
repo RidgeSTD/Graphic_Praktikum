@@ -1,5 +1,6 @@
 #include "gl_widget.h"
 #include <QMouseEvent>
+#include <iostream>
 
 GLWidget::GLWidget(QWidget *parent)
     : QGLWidget(parent)
@@ -13,23 +14,14 @@ GLWidget::~GLWidget()
 void GLWidget::initializeGL()
 {
     initializeOpenGLFunctions();
+    std::cout<<glGetString(GL_VERSION)<<std::endl;
+//    std::cout<<glGetString(GSLS)
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     program = new QOpenGLShaderProgram(this);
 
     initShaders();
 
-    const GLfloat vertex_position[3 * num_verts] =
-        {
-            1.0, 1.0, 0.0,
-            -1.0, 1.0, 0.0,
-            -1.0, -1.0, 0.0,
-            1.0, -1.0, 0.0};
-
-    const GLuint vertex_index[3 * num_tris] =
-        {
-            0, 1, 2,
-            0, 2, 3};
 //    on mac it's opengl 2.1, it's not a must to use vao, and it's also not
 //    supported. Here is just in case
     vao.create();
@@ -91,10 +83,14 @@ void GLWidget::paintGL()
 ////    glDrawElements(GL_TRIANGLES, 3 * num_tris, GL_UNSIGNED_INT, 0);
 //    glDrawArrays(GL_TRIANGLES, 0, 3 * num_verts);
 //    program->release();
-//    glClearColor(0, 200, 0, 0);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// 清除屏幕及深度缓存
     glLoadIdentity();
+//    glBegin(GL_POLYGON); // 绘制三角形
+//        for(int i = 0; i < 4;i++){
+//            glVertex3f(vertex_position[i * 3], vertex_position[i * 3+1], vertex_position[i * 3+2]);
+//        }
+    glTranslatef(-1.5f,0.0f,-6.0f);
     glBegin(GL_TRIANGLES); // 绘制三角形
             glVertex3f(0.0f, 1.0f, 0.0f); // 上顶点
             glVertex3f(-1.0f,-1.0f, 0.0f); // 左下

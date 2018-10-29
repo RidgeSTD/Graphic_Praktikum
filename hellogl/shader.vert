@@ -1,6 +1,6 @@
-#version 400
+#version 120
 
-in vec3 pos;
+varying vec3 pos;
 uniform mat4 mvp_matrix;
 
 void main(void)
