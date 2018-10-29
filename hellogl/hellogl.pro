@@ -40,9 +40,6 @@ OTHER_FILES += \
         shader.vert \
         shader.frag
 
-LIBS += -lglu32 -lopengl32
-
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+INCLUDEPATH += /usr/include/GL
+LIBPATH += /usr/lib/x86_64-linux-gnu
+LIBS += -lGL -lglut -lGLU

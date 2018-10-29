@@ -1,4 +1,4 @@
-#version 400
+#version 120
 
 varying vec3 pos;
 uniform mat4 mvp_matrix;

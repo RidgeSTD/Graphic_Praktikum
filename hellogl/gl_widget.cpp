@@ -16,15 +16,15 @@ void GLWidget::initializeGL()
 {
     initializeOpenGLFunctions();
     std::cout<<"OpenGL Version: "<<glGetString(GL_VERSION)<<std::endl;
-    std::cout<<"OpenGL Version: "<<glGetString(GL_SHADING_LANGUAGE_VERSION)<<std::endl;
+    std::cout<<"GLSL Version: "<<glGetString(GL_SHADING_LANGUAGE_VERSION)<<std::endl;
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     program = new QOpenGLShaderProgram(this);
 
 //    initShaders();
 
-//    on mac it's opengl 2.1, it's not a must to use vao, and it's also not
-//    supported. Here is just in case
+////    on mac it's opengl 2.1, it's not a must to use vao, and it's also not
+////    supported. Here is just in case
 //    vao.create();
 //    QOpenGLVertexArrayObject::Binder vaoBinder(&vao);
 
@@ -42,8 +42,8 @@ void GLWidget::initializeGL()
 //    ibo.allocate(vertex_index, 3 * num_tris * sizeof(GLuint));
 
 
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
+//    glEnable(GL_DEPTH_TEST);
+//    glEnable(GL_CULL_FACE);
 //    program->release();
 }
 
@@ -64,13 +64,10 @@ void GLWidget::initShaders()
         close();
     }
 
-    if (!program->bind())
-    {
-        close();
-    }
+    program->bind();
 
-    mvpUniformLoc = program->uniformLocation("mvp_matrix");
-    colorUniformLoc = program->uniformLocation("color");
+//    mvpUniformLoc = program->uniformLocation("mvp_matrix");
+//    colorUniformLoc = program->uniformLocation("color");
 }
 
 void GLWidget::paintGL()
@@ -87,16 +84,18 @@ void GLWidget::paintGL()
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// 清除屏幕及深度缓存
     glLoadIdentity();
-//    glBegin(GL_POLYGON); // 绘制三角形
-//        for(int i = 0; i < 4;i++){
-//            glVertex3f(vertex_position[i * 3], vertex_position[i * 3+1], vertex_position[i * 3+2]);
-//        }
     glTranslatef(-1.5f,0.0f,-6.0f);
-    glBegin(GL_TRIANGLES); // 绘制三角形
-            glVertex3f(0.0f, 1.0f, 0.0f); // 上顶点
-            glVertex3f(-1.0f,-1.0f, 0.0f); // 左下
-            glVertex3f( 1.0f,-1.0f, 0.0f); // 右下
-        glEnd(); // 三角形绘制结束
+    glBegin(GL_POLYGON); // 绘制三角形
+        for(int i = 0; i < 4;i++){
+            glVertex3f(vertex_position[i * 3], vertex_position[i * 3+1], vertex_position[i * 3+2]);
+        }
+    glEnd();
+//    glTranslatef(-1.5f,0.0f,-6.0f);
+//    glBegin(GL_TRIANGLES); // 绘制三角形
+//            glVertex3f(0.0f, 1.0f, 0.0f); // 上顶点
+//            glVertex3f(-1.0f,-1.0f, 0.0f); // 左下
+//            glVertex3f( 1.0f,-1.0f, 0.0f); // 右下
+//        glEnd(); // 三角形绘制结束
 }
 
 void GLWidget::resizeGL(int width, int height)
@@ -110,13 +109,9 @@ void GLWidget::resizeGL(int width, int height)
     // reset projection matrix
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(45.0f, (GLfloat)width/(GLfloat)height, 0.1f, 100.0f);
+    gluPerspective(45.0f, (GLfloat)width/(GLfloat)height, 0.1f, 10.0f);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-
-//    qreal aspect = (qreal)width / height;
-//    projectionM.setToIdentity();
-//    projectionM.perspective(45.0f, aspect, 0.1f, 10.0f);
 }
 
 //void GLWidget::mousePressEvent(QMouseEvent *event)
